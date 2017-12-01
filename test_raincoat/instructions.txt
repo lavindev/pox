@@ -1,0 +1,9 @@
+On console 1, launch POX + Raincoat
+./pox.py forwarding.raincoat --args=11
+
+--args= can be anything, but needs to be provided (not used anywhere for now)
+
+On console 2, launch a basic mininet topology
+sudo mn --controller remote
+
+You should see logs from raincoat on console 1
