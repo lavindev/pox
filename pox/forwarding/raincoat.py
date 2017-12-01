@@ -26,7 +26,22 @@ log = core.getLogger()
 
 class Raincoat(object):
     """
-    Raincoat doc string
+    RAINCOAT
+
+    Upon receiving a DNP3 Read Request (from control center):
+        - read sequence number from DNP3 request
+        - decide randomization sequence for this request (ex - break 20 substations into 5 groups of 4 online devices)
+        - for each group:
+            - forward request to online devices
+            - install rules for online devices with timeout = XXX seconds
+            - spoof decoy for remaining messages
+            - sleep for YYY seconds before moving onto next group
+            - something to keep in mind:
+                * don't send out spoofed packets immediately, add in an artificial delay
+                * we don't want a situation where decoy packets go out immediately
+                * and real measurements come in a bit later (due to standard network delays)
+
+
     """
 
     def __init__(self, args=None):
@@ -50,9 +65,8 @@ class Raincoat(object):
     def _handle_PacketIn(self, event):
         log.info("_handle_PacketIn Connection %s" % (event.connection,))
 
-    # you should be able to intercept other openflow events
-    # with _handle_<event_name>
-
+        # you should be able to intercept other openflow events
+        # with _handle_<event_name>
 
 
 def launch(args):
